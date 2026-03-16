@@ -1,36 +1,248 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+System Architecture — StoryVerse AI
+High Level Architecture
+flowchart LR
+    A[User Interface - Next.js / React] --> B[Frontend Components]
+    B --> C[API Routes - Next.js Backend]
+    C --> D[Gemini AI API]
+    C --> E[Image Generation API]
+    C --> F[Text-to-Speech API]
+    D --> G[Generated Story + Choices]
+    E --> H[Scene Image]
+    F --> I[Narration Audio]
+    G --> J[Story Engine State Manager]
+    H --> J
+    I --> J
+    J --> K[Multiverse Map (React Flow)]
+    J --> L[Book Page UI]
+    J --> M[Cinematic Player]
+    A --> N[Vercel Hosting]
 
-## Getting Started
+System Architecture Explanation
 
-First, run the development server:
+StoryVerse AI follows a modern client-server architecture where the frontend handles user interaction and cinematic rendering, while backend API routes orchestrate AI services.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The system consists of four main layers.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+⸻
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1️⃣ Frontend Layer (User Experience)
 
-## Learn More
+Built using:
+	•	Next.js
+	•	React
 
-To learn more about Next.js, take a look at the following resources:
+Responsibilities:
+	•	Display story content
+	•	Render scene images
+	•	Play narration audio
+	•	Manage cinematic animations
+	•	Display interactive choices
+	•	Visualize the multiverse map
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Key Components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+BookPage
 
-## Deploy on Vercel
+Displays the generated story using a typewriter animation.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+SceneImage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Shows AI-generated visuals with cinematic fade-in.
+
+NarrationPlayer
+
+Handles AI narration playback.
+
+UniverseChoices
+
+Displays user choices that branch the story.
+
+MultiverseMap
+
+Visualizes the branching story graph using:
+	•	React Flow
+
+Cinematic Mode
+
+Auto-plays narration, music, and story scrolling.
+
+⸻
+
+2️⃣ Backend Layer (AI Orchestration)
+
+Backend is implemented using Next.js API routes.
+
+Example:
+/api/story/generate
+
+Responsibilities:
+	•	Receive user prompts
+	•	Call AI services
+	•	Combine responses
+	•	Return structured data to the frontend
+
+Example response:
+{
+  "story": "The forest was silent...",
+  "choices": [
+    "Enter the cave",
+    "Follow the river",
+    "Return to the village"
+  ],
+  "imageUrl": "...",
+  "narrationUrl": "...",
+  "musicMood": "suspense"
+}
+
+3️⃣ AI Services Layer
+
+StoryVerse AI integrates multiple AI services.
+
+Story Generation
+
+Using:
+	•	Gemini
+
+Generates:
+	•	story chapters
+	•	branching choices
+	•	scene mood
+
+⸻
+
+Image Generation
+
+Creates visual scenes that match the generated story.
+
+Example:
+
+"A mysterious jungle temple covered in ancient symbols"
+
+
+⸻
+
+Text-to-Speech (Narration)
+
+Converts generated story text into narration audio.
+
+This allows the story to be heard as well as read.
+
+⸻
+
+4️⃣ State & Multiverse Engine
+
+The application maintains story progression using a Story Engine.
+
+State tracks:
+	•	story history
+	•	selected choices
+	•	generated universes
+	•	node relationships
+
+Each chapter becomes a node in a multiverse graph.
+
+Example structure:
+Chapter 1
+ ├ Choice A → Chapter 2
+ ├ Choice B → Chapter 3
+ └ Choice C → Chapter 4
+
+
+The graph is visualized using:
+	•	React Flow
+
+⸻
+
+🎬 Cinematic Rendering Pipeline
+
+The storytelling experience is built as a multimedia pipeline.
+
+Prompt → Story → Image → Narration → User Choice
+
+Steps:
+	1.	User enters prompt
+	2.	Backend generates story
+	3.	Image is generated
+	4.	Narration audio is created
+	5.	Frontend renders cinematic scene
+	6.	User selects next choice
+	7.	Story continues
+
+⸻
+
+⚡ Error Handling System
+
+The application includes production-level fault tolerance.
+
+Handled errors include:
+	•	AI generation failures
+	•	network timeouts
+	•	image generation errors
+	•	narration generation errors
+
+Fallback UI shows:
+AI failed to generate the next chapter. Try again.
+
+Users can retry generation without losing progress.
+
+⸻
+
+🚀 Deployment Architecture
+
+StoryVerse AI is deployed using:
+	•	Vercel for hosting
+	•	GitHub for version control
+
+Deployment pipeline:
+GitHub Push
+     ↓
+Vercel Build
+     ↓
+Next.js Deployment
+     ↓
+Live Production URL
+
+ Architecture Benefits
+
+Scalability
+
+Serverless API routes scale automatically.
+
+Modularity
+
+Each AI service is isolated and replaceable.
+
+Interactivity
+
+Multiverse graph enables dynamic storytelling.
+
+Immersion
+
+Multimedia pipeline creates a cinematic experience.
+
+⸻
+
+🧠 Future Architecture Improvements
+
+Planned enhancements include:
+	•	persistent story databases
+	•	shared story links
+	•	collaborative storytelling sessions
+	•	character-based voice narration
+	•	user profiles and story history
+
+⸻
+
+⭐ Suggested README Sections
+
+Add these sections to your README:
+
+1. Project Overview
+2. Features
+3. System Architecture
+4. Tech Stack
+5. Installation
+6. Running Locally
+7. Deployment
+8. Future Improvements
